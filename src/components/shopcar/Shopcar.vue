@@ -1,7 +1,7 @@
 <template>
   <div class="shopcar">
-    <div class="shopcar-wrapper" @click="toggle">
-      <div class="wrapper-left">
+    <div class="shopcar-wrapper">
+      <div class="wrapper-left" @click="toggle">
         <div class="logo-wrapper" >
           <div class="logo" :class="{'heightlight': totalCount>0}">
             <span class="icon icon-shopcar"></span>
@@ -12,7 +12,7 @@
         <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
       </div>
       <div class="wrapper-right">
-        <div class="pay" :class='payClass'>
+        <div class="pay" @click='pay' :class='payClass'>
           {{payDesc}}
         </div>
       </div>
@@ -43,7 +43,6 @@
 </template>
 <script>
 import carcontrol from '../carcontrol/Carcontrol'
-import BScroll from 'better-scroll'
 export default {
   name: 'shopcar',
   data () {
@@ -56,15 +55,7 @@ export default {
   },
   props: {
     selectFoods: {
-      type: Array,
-      default () {
-        return [
-          {
-            price: 10,
-            count: 1
-          }
-        ]
-      }
+      type: Array
     },
     deliveryPrice: {
       type: Number,
@@ -118,17 +109,6 @@ export default {
       }
     }
   },
-  watch: {
-    totalCount (val) {
-      if (val !== 0) {
-        this.$nextTick(() => {
-          this.selectScroll = new BScroll(this.$refs.selectcontent, {
-            click: true
-          })
-        })
-      }
-    }
-  },
   methods: {
     clearCar () {
       this.selectFoods.forEach((food) => {
@@ -143,7 +123,17 @@ export default {
     },
     hidelist () {
       this.fold = !this.fold
+    },
+    pay () {
+      alert('去支付')
     }
+  },
+  created () {
+    this.$nextTick(() => {
+      this.selectScroll = new this.BScroll(this.$refs.selectcontent, {
+        click: true
+      })
+    })
   }
 }
 </script>
@@ -278,7 +268,7 @@ export default {
           font-size 0.24rem
           color: #00a0dc
       .show-select-content
-        max-height: 4.34rem
+        height: 4.34rem
         overflow: hidden
         background: #fff
       .car-item

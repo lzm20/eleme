@@ -7,6 +7,7 @@ import Merchant from '@/components/merchant/Merchant'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/goods',

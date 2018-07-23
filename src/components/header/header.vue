@@ -184,7 +184,7 @@ export default {
     overflow auto
     transition all 0.5s
     background-color rgba(7,17,27,0.8)
-    z-index 9
+    z-index 99
     &..fade-enter-active, &.fade-leave-active
       opacity: 1
       background: rgba(7, 17, 27, 0.8)

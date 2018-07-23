@@ -2,7 +2,7 @@
   <div class="goods">
     <div class="menu-wrapper" v-if='goods' ref='menuwrapper'>
       <ul>
-        <li class="menu-item" :key='index' v-for="(item,index) in goods">
+        <li class="menu-item" :class="{'cur':index == selectIndex}" @click='selectMenu(index,$event)' :key='index' v-for="(item,index) in goods">
           <div class='border-top1px'>
             <span class="icon"></span>
             <span class="menu-text">{{item.name}}</span>
@@ -15,7 +15,7 @@
         <li class='food-list' :key='index' v-for="(fitem,index) in goods">
           <div class="food-list-title">{{fitem.name}}</div>
           <ul>
-            <li class='food-list-item border-bot1px' :key='iidex' v-for="(iitem,iidex) in fitem.foods">
+            <li class='food-list-item border-bot1px' @click='selectFood(iitem)' :key='iidex' v-for="(iitem,iidex) in fitem.foods">
               <div class="i-left">
                 <img :src="iitem.image" alt="">
               </div>
@@ -40,10 +40,10 @@
       </ul>
     </div>
     <shopcar  :selectFoods='selectFoods' :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcar>
+    <food :food="selFood" v-if='selFood' v-show='showFood' v-on:back='hideFood'></food>
   </div>
 </template>
 <script>
-import BScroll from 'better-scroll'
 import shopcar from '../shopcar/Shopcar'
 import carcontrol from '../carcontrol/Carcontrol'
 import food from '../food/Foods'
@@ -63,7 +63,11 @@ export default {
   data () {
     return {
       mes: '商品',
-      goods: []
+      goods: [],
+      selFood: {},
+      showFood: false,
+      scrollY: 0,
+      listHeight: []
     }
   },
   computed: {
@@ -77,6 +81,19 @@ export default {
         })
       })
       return foods
+    },
+    selectIndex () {
+      if (this.scrollY) {
+        for (let i = 0; i < this.listHeight.length; i++) {
+          let height = this.listHeight[i]
+          let nexHeitht = this.listHeight[i + 1]
+          if (!nexHeitht || (this.scrollY > height && this.scrollY < nexHeitht)) {
+            return i
+          }
+        }
+      } else {
+        return 0
+      }
     }
   },
   created () {
@@ -86,18 +103,55 @@ export default {
         this.goods = response.data
         this.$nextTick(() => {
           this.initBerrScroll()
+          this.initHeight()
         })
       }
     })
   },
   methods: {
     initBerrScroll () {
-      this.meunScroll = new BScroll(this.$refs.menuwrapper, {
+      this.meunScroll = new this.BScroll(this.$refs.menuwrapper, {
         click: true
       })
-      this.foodScroll = new BScroll(this.$refs.foodwrapper, {
-        click: true
+      this.foodScroll = new this.BScroll(this.$refs.foodwrapper, {
+        click: true,
+        probeType: 3
       })
+      this.foodScroll.on('scroll', (pos) => {
+        this.scrollY = Math.abs(Math.round(pos.y))
+      })
+    },
+    initHeight () {
+      let foodList = this.$refs.foodwrapper.getElementsByClassName('food-list')
+      let height = 0
+      this.listHeight.push(height)
+      for (let i = 0; i < foodList.length; i++) {
+        let item = foodList[i]
+        height += item.clientHeight
+        this.listHeight.push(height)
+      }
+    },
+    selectFood (food) {
+      this.selFood = food
+      this.showFood = true
+    },
+    isEmptyObject (ea) {
+      let t
+      for (t in ea) {
+        return !1
+      }
+      return !0
+    },
+    hideFood () {
+      this.showFood = false
+    },
+    selectMenu (index, event) {
+      if (!event._constructed) {
+        return false
+      }
+      let foodList = this.$refs.foodwrapper.getElementsByClassName('food-list')
+      let el = foodList[index]
+      this.foodScroll.scrollToElement(el, 300)
     }
   }
 }
@@ -115,6 +169,9 @@ export default {
         padding 0rem 0.24rem
         height 1.08rem
         display: table
+        width 100%
+        &.cur
+          background-color #fff
         &>div
           display: table-cell
           vertical-align: middle

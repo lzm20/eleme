@@ -1,12 +1,12 @@
 <template>
   <div class="carcontrol clearfix">
     <transition name='move' enter-active-class='move-enter' leave-active-class="move-leave-to">
-      <div class="decrease" @click.prevent='decrease' v-show="food.count>0">
+      <div class="decrease" @click.stop='decrease' v-show="food.count>0">
         <div class="icon-decrease"></div>
       </div>
     </transition>
     <div class="count" v-show='food.count>0'>{{food.count}}</div>
-    <div class="add" @click.prevent='add'></div>
+    <div class="add" v-on:click.stop.prevent='add'></div>
   </div>
 </template>
 <script>
@@ -36,7 +36,6 @@ export default {
       }
     },
     decrease (event) {
-      console.log(event)
       if (!event._constructed) {
         return false
       }

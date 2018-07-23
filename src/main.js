@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
+import store from './store/store'
+import BScroll from 'better-scroll'
+Vue.prototype.BScroll = BScroll
 Vue.use(VueResource)
 Vue.config.productionTip = false
 
@@ -14,6 +17,7 @@ router.beforeEach((to, from, next) => {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>'
