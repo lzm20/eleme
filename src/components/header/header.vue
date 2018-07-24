@@ -86,7 +86,7 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-@import './icon.css'
+@import '../../assets/css/mixin'
 .header
   width:100%
   background-color:rgba(7,17,27,0.5)
@@ -122,7 +122,7 @@ export default {
         margin:0.04rem 0rem 0.16rem 0rem
         color  #fff
         .brand
-          background-image url(./brand@2x.png)
+          background-image url(../../assets/img/text/brand@2x.png)
           display: inline-block
           vertical-align: top
           width: 0.6rem
@@ -160,7 +160,7 @@ export default {
       margin-top: 0.16rem
       width: 0.44rem
       height: 0.24rem
-      background-image: url(./bulletin@2x.png);
+      background-image: url(../../assets/img/text/brand@2x.png)
       background-size:100%
       background-repeat: no-repeat
   .support-count

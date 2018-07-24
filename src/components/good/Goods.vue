@@ -4,7 +4,7 @@
       <ul>
         <li class="menu-item" :class="{'cur':index == selectIndex}" @click='selectMenu(index,$event)' :key='index' v-for="(item,index) in goods">
           <div class='border-top1px'>
-            <span class="icon"></span>
+            <span class="icon" :class='classMap[item.type]' v-if='item.type>0 || item.type==0'></span>
             <span class="menu-text">{{item.name}}</span>
           </div>
         </li>
@@ -64,10 +64,11 @@ export default {
     return {
       mes: '商品',
       goods: [],
-      selFood: {},
+      selFood: null,
       showFood: false,
       scrollY: 0,
-      listHeight: []
+      listHeight: [],
+      classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     }
   },
   computed: {
@@ -159,9 +160,11 @@ export default {
 <style lang="stylus">
 @import "../../assets/css/mixin"
   .goods
+    position absolute
+    top 0rem
+    bottom 0.96rem
     display flex
     width 100%
-    height 100%
     .menu-wrapper
       flex 0 0 1.6rem
       background #f3f5f7

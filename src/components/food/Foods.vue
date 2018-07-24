@@ -1,6 +1,6 @@
 <template>
 <transition name='slide-fade'>
-  <div class="foods-wrapper" ref='foodswrpper'>
+  <div class="foods-wrapper" ref='foodswrpper' v-if='food'>
       <div class='foods-contain'>
         <div class='food-img'>
           <img :src="food.image" alt="">
@@ -21,20 +21,18 @@
             </div>
           </div>
         </div>
-        <div class="split"></div>
+        <split></split>
         <div class="food-more-new">
           <h1 class='title'>商品信息</h1>
           <p class='desc' v-if='food.info'>{{food.info}}</p>
           <p class='desc' v-else>暂无食物信息</p>
         </div>
-        <div class="split"></div>
+        <split></split>
         <div class="food-evaluation border-bot1px">
           <h1 class="title">商品评价</h1>
-          <div class="eval-tab">
-            <button class='btn-sort' @click='selectType(btn.type)' :class="{'cur':btn.type==type}" :key='index' :type='btn.type' v-for='(btn,index) in btnList'>{{btn.text}}</button>
-          </div>
+          <ratingselect v-if='food.ratings' :ratings='food.ratings' :type='commentType' v-on:changeType='changeType'></ratingselect>
         </div>
-        <div class="evaluation-list">
+        <div class="evaluation-list" v-if="ratings">
             <ul>
               <li class='border-bot1px evaluation-item' :key='index' v-for='(rate,index) in ratings'>
                 <div class="rate-time-name clearfix">
@@ -55,21 +53,20 @@
 import {formatDate} from '@/assets/js/base'
 import Vue from 'vue'
 import carcontrol from '../carcontrol/Carcontrol'
+import ratingselect from '../ratingselect/Ratingselect'
+import {ALL} from '../../assets/js/initData'
+import split from '../split/split'
 export default {
   name: 'food',
   data () {
     return {
-      carTant: false,
-      type: 2,
-      btnList: [
-        {type: 2, text: '全部'},
-        {type: 1, text: '推荐2'},
-        {type: 0, text: '吐槽1'}
-      ]
+      carTant: {}
     }
   },
   components: {
-    carcontrol
+    carcontrol,
+    ratingselect,
+    split
   },
   props: {
     food: {
@@ -81,14 +78,17 @@ export default {
       return this.food.count
     },
     ratings () {
-      if (this.type === 2) {
+      if (this.commentType === ALL) {
         return this.food.ratings
       } else {
-        return this.food.ratings.filter((val) => val.rateType === this.type)
+        return this.food.ratings.filter((val) => val.rateType === this.commentType)
       }
+    },
+    commentType () {
+      return this.$store.state.commentType
     }
   },
-  created () {
+  mounted () {
     this.$nextTick(() => {
       this.foodBScroll = new this.BScroll(this.$refs.foodswrpper, {
         click: true
@@ -108,8 +108,8 @@ export default {
       let date = new Date(time)
       return formatDate(date, 'yyyy-MM-dd hh:mm')
     },
-    selectType (tp) {
-      this.type = tp
+    changeType (tp) {
+      this.$store.commit('changeCommentType', tp)
     }
   }
 }
@@ -118,12 +118,6 @@ export default {
 @import '../../assets/css/mixin'
   img
     max-width 100%
-  .split
-    width: 100%
-    height:0.32rem
-    border-top: 1px solid rgba(7,17,27,0.1)
-    border-bottom: 1px solid rgba(7,17,27,0.1)
-    background: #f3f5f7
   .title
     line-height:0.28rem
     margin-bottom:0.12rem
@@ -135,8 +129,6 @@ export default {
     left 0rem
     width 100%
     bottom 0.96rem
-    // overflow-x hidden
-    // overflow-y scroll
     overflow hidden
     background-color #ffffff
     z-index 8

@@ -1,7 +1,7 @@
 <template>
   <div class="carcontrol clearfix">
     <transition name='move' enter-active-class='move-enter' leave-active-class="move-leave-to">
-      <div class="decrease" @click.stop='decrease' v-show="food.count>0">
+      <div class="decrease-n" @click.stop='decrease' v-show="food.count>0">
         <div class="icon-decrease"></div>
       </div>
     </transition>
@@ -52,7 +52,7 @@ export default {
 <style lang="stylus" scoped>
 .carcontrol
   width 1.5rem
-  .decrease
+  .decrease-n
     float left
     width 0.5rem
     display inline-block
