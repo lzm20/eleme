@@ -125,7 +125,7 @@ export default {
       this.fold = !this.fold
     },
     pay () {
-      alert('去支付')
+      console.log('如果满足-->去支付')
     }
   },
   created () {

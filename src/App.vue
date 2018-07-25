@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view/>
+    <div class="contain">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -13,7 +15,7 @@ export default {
     }
   },
   created () {
-    console.log(this.msg)
+    // console.log(this.msg)
   }
 }
 </script>
@@ -21,8 +23,9 @@ export default {
   #app
     width:100%
     height:100%
+  .contain
+    padding-top 0.96rem
 </style>
-
 <style>
   @import './assets/css/reset.css'
 </style>

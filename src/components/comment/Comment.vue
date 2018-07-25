@@ -104,7 +104,7 @@ export default {
     }
   },
   created () {
-    this.$http.get('api/ratings').then((res) => {
+    this.$http.get('/api/ratings').then((res) => {
       res = res.body
       if (res.errno === ERROR_OK) {
         this.comment = res.data

@@ -9,7 +9,7 @@ import BScroll from 'better-scroll'
 Vue.prototype.BScroll = BScroll
 Vue.use(VueResource)
 Vue.config.productionTip = false
-
+Vue.config.devtools = true
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title
   next()
