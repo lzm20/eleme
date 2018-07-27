@@ -16,6 +16,7 @@ var appData = require('../data.json')//加载本地数据文件的路径
 var seller = appData.seller;
 var goods = appData.goods;
 var ratings = appData.ratings;
+var merchant = appData.merchant;
 var apiRoutes = express.Router()
 app.use('/api', apiRoutes)
 
@@ -72,6 +73,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         res.json({
           errno: 0,
           data: seller
+        })
+      })
+      app.get('/api/merchant', (req, res) => {
+        res.json({
+          errno: 0,
+          data: merchant
         })
       })
     }

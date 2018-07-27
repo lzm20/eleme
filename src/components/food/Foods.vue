@@ -55,7 +55,7 @@ import Vue from 'vue'
 import carcontrol from '../carcontrol/Carcontrol'
 import ratingselect from '../ratingselect/Ratingselect'
 import {ALL} from '../../assets/js/initData'
-import split from '../split/split'
+import split from '../split/Split'
 export default {
   name: 'food',
   data () {

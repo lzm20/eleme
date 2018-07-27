@@ -21,3 +21,11 @@ export function formatDate (date, fmt) {
 function padLeftZero (str) {
   return ('00' + str).substr(str.length)
 }
+/* 本地存储存值 */
+export function localStorageSetitem (key, value) {
+  return window.localStorage.setItem(key, value)
+}
+/* 获取本地存储的值 */
+export function getLocalStorage (key) {
+  return window.localStorage.getItem(key)
+}

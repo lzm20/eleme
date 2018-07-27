@@ -8,6 +8,8 @@ import Comment from '@/components/comment/Comment'
 import Merchant from '@/components/merchant/Merchant'
 import My from '@/components/my/My'
 import Order from '@/components/order/Order'
+import Login from '@/components/login/Login'
+import Search from '@/components/search/Search'
 
 Vue.use(Router)
 
@@ -16,23 +18,35 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: '首页',
+      redirect: '/home'
+    },
+    {
+      path: '/home',
+      name: 'home',
       component: Home,
       meta: {
         title: '首页'
       }
     },
     {
-      path: '/home',
-      name: '首页',
-      component: Home,
+      path: '/search',
+      name: 'search',
+      component: Search,
       meta: {
-        title: '首页'
+        title: '搜索'
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+      meta: {
+        title: '登录'
       }
     },
     {
       path: '/shop',
-      name: '店铺',
+      name: 'shop',
       component: Shop,
       meta: {
         title: '店铺'
@@ -40,7 +54,7 @@ export default new Router({
       children: [
         {
           path: '/shop/goods',
-          name: '商品',
+          name: 'goods',
           component: Goods,
           meta: {
             title: '商品'
@@ -48,7 +62,7 @@ export default new Router({
         },
         {
           path: '/shop/comment',
-          name: '评论',
+          name: 'comment',
           component: Comment,
           meta: {
             title: '评论'
@@ -56,7 +70,7 @@ export default new Router({
         },
         {
           path: '/shop/merchant',
-          name: '商家',
+          name: 'merchant',
           component: Merchant,
           meta: {
             title: '商家'
@@ -66,7 +80,7 @@ export default new Router({
     },
     {
       path: '/order',
-      name: '订单',
+      name: 'order',
       component: Order,
       meta: {
         title: '订单'
@@ -74,7 +88,7 @@ export default new Router({
     },
     {
       path: '/my',
-      name: '我的',
+      name: 'my',
       component: My,
       meta: {
         title: '我的'

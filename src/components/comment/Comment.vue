@@ -58,7 +58,7 @@ import {formatDate} from '@/assets/js/base'
 import star from '../star/Star'
 import ratingselect from '../ratingselect/Ratingselect'
 import {ALL} from '../../assets/js/initData'
-import split from '../split/split'
+import split from '../split/Split'
 const ERROR_OK = 0
 export default {
   data () {

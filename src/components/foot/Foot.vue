@@ -21,6 +21,7 @@
     width 100%
     height 0.96rem
     border-top 1px solid #cecdcd
+    box-shadow 0px 0px 5px #cdcdcd
     .foot-item
       flex 1
       height 0.96rem

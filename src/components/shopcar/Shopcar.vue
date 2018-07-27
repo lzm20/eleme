@@ -43,6 +43,8 @@
 </template>
 <script>
 import carcontrol from '../carcontrol/Carcontrol'
+import {localStorageSetitem, getLocalStorage} from '../../assets/js/base'
+import {localStorageKey} from '../../assets/js/initData'
 export default {
   name: 'shopcar',
   data () {
@@ -64,6 +66,9 @@ export default {
     minPrice: {
       type: Number,
       default: 0
+    },
+    seller: {
+      type: Object
     }
   },
   computed: {
@@ -125,7 +130,30 @@ export default {
       this.fold = !this.fold
     },
     pay () {
-      console.log('如果满足-->去支付')
+      let msg = '是否支付'
+      let hasOrder = getLocalStorage(localStorageKey)
+      let orderObj = {
+        Paid: false,
+        order: null,
+        seller: this.seller
+      }
+      if (confirm(msg)) {
+        orderObj.Paid = true
+      } else {
+        orderObj.Paid = false
+      }
+      if (hasOrder) {
+        let orders = JSON.parse(getLocalStorage(localStorageKey))
+        orderObj.order = this.selectFoods
+        orders.push(orderObj)
+        localStorageSetitem(localStorageKey, JSON.stringify(orders))
+      } else {
+        let setFood = []
+        orderObj.order = this.selectFoods
+        setFood.push(orderObj)
+        localStorageSetitem(localStorageKey, JSON.stringify(setFood))
+      }
+      this.clearCar()
     }
   },
   created () {

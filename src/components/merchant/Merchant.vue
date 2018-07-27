@@ -72,7 +72,7 @@
 </template>
 <script>
 import star from '@/components/star/Star'
-import split from '../split/split'
+import split from '../split/Split'
 export default {
   data () {
     return {

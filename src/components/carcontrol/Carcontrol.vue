@@ -25,7 +25,6 @@ export default {
   },
   methods: {
     add (event) {
-      console.log(event)
       if (!event._constructed) {
         return false
       }

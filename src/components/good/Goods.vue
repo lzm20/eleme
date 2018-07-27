@@ -39,7 +39,7 @@
         </li>
       </ul>
     </div>
-    <shopcar  :selectFoods='selectFoods' :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcar>
+    <shopcar  :selectFoods='selectFoods' :seller='seller' :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcar>
     <food :food="selFood" v-if='selFood' v-show='showFood' v-on:back='hideFood'></food>
   </div>
 </template>
